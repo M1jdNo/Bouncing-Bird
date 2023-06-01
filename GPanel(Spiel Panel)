@@ -1,0 +1,154 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+import GUI.MyPanel.MyMouseListener;
+
+public class GPanel extends MenuPanel{
+	
+	int score;
+	JButton startBut;
+	boolean visible = true;
+	int birdxPOS = 50;
+	int birdyPOS = 300;
+	int inc = 20;
+	String start = "Click to Start!";
+	String St = "";
+	Image tubeDown = new ImageIcon("/Users/uni/Desktop/tubeDown.png").getImage();
+	Image tubeup = new ImageIcon("/Users/uni/Desktop/tube.png").getImage();
+    Timer time;
+ 
+	public GPanel() {
+	
+	time = new Timer(3330, new MoveListener());
+	
+		but4.setBounds(144, 350, 150, 50);
+		startBut = new JButton("Starten");
+		startBut.setBounds(144, 250, 150, 50);
+		startBut.addActionListener(new startgameListener());
+		
+		if (visible == true) {
+		this.add(startBut);
+		this.add(but5);
+		this.add(but4);
+		}
+
+		this.addMouseListener(new MyMouseListener()); //new MyMouseListener() --> anaoynme innere Klasse, weil sie keinen Namen hat.
+		 
+		//mouseadapter basis für mouselistener und mousemotionlistener, das spart einem Code, denn damit müsste man nur die methode 
+		//überschrieben, welche man braucht, Bsp. mousepressed, mouseentered, ..... --> dann kann man mit mouseadapter auch nur
+		//mousepressed überschreiben.
+		
+		// -> das ist Lander
+
+	}
+	protected void paintComponent(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paintComponent(g);
+
+		//	g.drawImage(titelBB, 44, -50, 350, 350, this);
+		//g.drawString("Designer: Majd, Ekber, David und Yasin", 100 , 738);
+		
+		g.drawImage(grünbird, birdxPOS, birdyPOS, 70, 50, this);
+		
+		if(visible == false) {
+						
+			g.drawString(start, 200, 360);
+			g.drawImage(tubeDown, 400, 0, 70, 300, this);
+			g.drawImage(tubeup, 400, 418, 70, 350, this);
+			g.drawImage(tubeDown, 600, 0, 70, 250, this);
+			g.drawImage(tubeup, 600, 318, 70, 450, this);
+		}
+
+		repaint();
+	}
+	
+	public class startgameListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			if(e.getSource() == startBut) {
+				visible = false;
+			}	
+			
+			if (visible == false) {
+				
+				remove(startBut);
+				remove(but5);
+				remove(but4);
+				repaint();
+					}
+			
+			if(e.getSource() == but5) {
+				
+			}	
+		}
+
+	}
+
+	public class MyMouseListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			start = St;
+			birdxPOS = birdxPOS + inc;
+			birdyPOS = birdyPOS - inc;
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {
+
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+
+
+		}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			birdyPOS = birdyPOS + inc;
+			birdxPOS = birdxPOS + inc;
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+			
+		}
+
+	}
+	
+	public class MoveListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	
+        	System.out.println("22");
+        	
+        	if(start == St) {
+        		System.out.println("22");
+        		time.start();
+        		}
+        		
+					birdyPOS = birdyPOS + inc;
+					birdxPOS = birdxPOS + inc;
+					System.out.println(birdxPOS);
+			}
+        }
+
+		
+	
+	
+	
+	
+}
